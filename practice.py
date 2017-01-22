@@ -1,24 +1,35 @@
+import linked_list as LL
+from linked_list import ListNode
+
+import binary_tree as BST
+from binary_tree import BSTNode
+
 def main():
     print longestPalindromSubstringPrint("asdfasddsaalkj")
     print
     print longestCommonSubsequence("poaquberabc","abc")
     print
-    ll = buildLinkedList([8,3,6,4,1,9,2,5])
-    printLinkedList(partitionLinkedList(ll,4))
+    ll = LL.buildLinkedList([8,3,6,4,1,9,2,5])
+    LL.printLinkedList(partitionLinkedList(ll,4))
     print
     
-    root = BinaryTreeNode(10)
-    root.left = BinaryTreeNode(8)
-    root.right = BinaryTreeNode(12)
-    root.left.left = BinaryTreeNode(7)
-    root.left.right = BinaryTreeNode(9)
-    root.right.left = BinaryTreeNode(11)
-    root.right.right = BinaryTreeNode(13)
+    root = BSTNode(10)
+    root.left = BSTNode(8)
+    root.right = BSTNode(12)
+    root.left.left = BSTNode(7)
+    root.left.right = BSTNode(9)
+    root.right.left = BSTNode(11)
+    root.right.right = BSTNode(13)
     
-    preorder(root)
+    BST.preorder(root)
     print
     invertBinaryTree(root)
-    preorder(root)
+    BST.preorder(root)
+    
+    print 'tree'
+    tree2 = BST.build([2,3,1])
+    print tree2
+    
     
 def longestPalindromSubstringPrint(str):
     dp = [[(0,-1,-1) for j in range(len(str))] for i in range(len(str))]
@@ -95,7 +106,7 @@ def partitionLinkedList(ll,x):
     temp.next = head
     head = temp
     
-    printLinkedList(head)
+    LL.printLinkedList(head)
     
     iter = head
     while(iter.next != None):
@@ -116,49 +127,12 @@ def invertBinaryTree(tree):
         temp = tree.right
         tree.right = tree.left
         tree.left = temp
-    
-def preorder(tree):
-    if tree != None:
-        print tree.value
-        preorder(tree.left)
-        preorder(tree.right)
-    
-def buildLinkedList(arr):
-    iter = None
-    head = None
-    for x in arr:
-        node = ListNode(x)
-        if head == None:
-            head = node
-            iter = head
-        else:
-            iter.next = node
-            iter = iter.next
-    return head
-    
-def printLinkedList(ll):
-    iter = ll
-    while(iter != None):
-        print iter.value,
-        iter = iter.next
-    print
         
 def print_matrix(mat):
     for row in mat:
         for col in row:
             print col,
         print
-        
-class ListNode:    
-    def __init__(self,x):
-        self.value = x
-        self.next = None
-
-class BinaryTreeNode:
-    def __init__(self,x):
-        self.value = x
-        self.left = None
-        self.right = None
         
 if __name__ == '__main__':
     main()
