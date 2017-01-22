@@ -5,31 +5,71 @@ import binary_tree as BST
 from binary_tree import BSTNode
 
 def main():
-    print longestPalindromSubstringPrint("asdfasddsaalkj")
-    print
-    print longestCommonSubsequence("poaquberabc","abc")
-    print
-    ll = LL.buildLinkedList([8,3,6,4,1,9,2,5])
-    LL.printLinkedList(partitionLinkedList(ll,4))
+    # Longest Palindrome Substring
+    str = "asdfasddsaalkj"
+    print 'Longest Palindrome Substring'
+    print 'Input:',str
+    print 'Output:'
+    longestPalindromSubstringPrint(str)
     print
     
-    root = BSTNode(10)
-    root.left = BSTNode(8)
-    root.right = BSTNode(12)
-    root.left.left = BSTNode(7)
-    root.left.right = BSTNode(9)
-    root.right.left = BSTNode(11)
-    root.right.right = BSTNode(13)
-    
-    BST.preorder(root)
+    # Longest Common Subsequence
+    s1 = 'poaquberabc'
+    s2 = 'abc'
+    print 'Longest Common Subsequence'
+    print 'Input: ',s1,s2
+    print 'Output:'
+    print longestCommonSubsequence(s1,s2)
     print
-    invertBinaryTree(root)
-    BST.preorder(root)
     
-    print 'tree'
-    tree2 = BST.build([2,3,1])
-    print tree2
+    # Partition Linked List
+    list = [8,3,6,4,1,9,2,5]
+    ll = LL.buildLinkedList(list)
+    print 'Partition Linked List'
+    pivot = 4
+    print 'List:',
+    LL.printLinkedList(ll)
+    print 'Pivot:',pivot
+    print 'Ouput:',
+    LL.printLinkedList(partitionLinkedList(ll,pivot))
+    print
     
+    # Invert Binary Tree
+    print 'Invert Binary Tree'
+    tree_arr = [10,8,12,7,9,11,13]
+    tree = BST.build(tree_arr)
+    print 'Input (inorder traversal):'
+    BST.printTree(tree)
+    print 'Output (inorder traversal):'
+    invertBinaryTree(tree)
+    BST.printTree(tree)
+    
+    # Optimal Change problem
+    print 'Optimal Change Problem'
+    denoms = [1,3,5,10,15]
+    amount = 27
+    print 'Amount'
+    print amount
+    print 'Denomintations'
+    for denom in denoms:
+        print denom,
+    print '\n-------'
+    optimalChange(denoms,amount)
+    
+def optimalChange(denoms,amount):
+    dp = [[0 for cols in denoms] for rows in range(amount+1)]
+    
+    for x in range(amount+1):
+        dp[x][0] = x
+    
+    for j in range(1,len(denoms)): # current denomination
+        for i in range(1,amount+1): # current amount
+            if i - denoms[j] >= 0:
+                dp[i][j] = min(dp[i][j-1],dp[i-denoms[j]][j]+1)
+            else:
+                dp[i][j] = dp[i][j-1]
+    
+    print_matrix(dp)       
     
 def longestPalindromSubstringPrint(str):
     dp = [[(0,-1,-1) for j in range(len(str))] for i in range(len(str))]
@@ -56,7 +96,12 @@ def longestPalindromSubstringPrint(str):
                     from_i = i+1
                     from_j = j
                 dp[i][j] = (val,from_i,from_j)
-        
+    
+    for row in dp:
+        for tup in row:
+            print tup[0],
+        print
+    
     i = 0
     j = len(str)-1
     v,from_i,from_j = dp[i][j]
@@ -68,11 +113,7 @@ def longestPalindromSubstringPrint(str):
         j = from_j
         from_i = dp[i][j][1]
         from_j = dp[i][j][2]
-            
-    for row in dp:
-        for tup in row:
-            print tup[0],
-        print
+ 
     return dp[0][len(str)-1][0]
         
 def longestCommonSubsequence(s1,s2):
@@ -105,8 +146,6 @@ def partitionLinkedList(ll,x):
     iter.next = iter.next.next
     temp.next = head
     head = temp
-    
-    LL.printLinkedList(head)
     
     iter = head
     while(iter.next != None):

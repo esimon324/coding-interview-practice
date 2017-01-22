@@ -1,5 +1,6 @@
+from Queue import Queue
+
 class BSTNode:
-    
     def __init__(self,x,parent=None,isLeft=None):
         self.value = x
         self.left = None
@@ -94,22 +95,47 @@ def min(tree):
     
 def preorder(tree):
     if tree != None:
-        print tree.value
+        print tree.value,
         preorder(tree.left)
         preorder(tree.right)
 
 def inorder(tree):
     if tree != None:
         inorder(tree.left)
-        print tree.value
+        print tree.value,
         inorder(tree.right)
 
 def postorder(tree):
     if tree != None:
         postorder(tree.left)
         postorder(tree.right)
-        print tree.value      
+        print tree.value,
         
+def printTree(tree):
+    q = Queue()
+    q.put(tree)
+    count = 0
+    track = 1
+    spaces = '   '
+    print spaces,
+    while not q.empty():
+        node = q.get()
+        count += 1
+        if track == count:
+            track *= 2
+            count = 0
+            spaces = spaces[2:]
+            print node.value
+            print spaces,
+        else:
+            print node.value,spaces,
+            
+        if node.left != None:
+            q.put(node.left)
+        if node.right != None:
+            q.put(node.right)
+    print
+    
 if __name__ == '__main__':
     import binary_tree as bt
     tree = build([10,5,15,1,7,12,19])
