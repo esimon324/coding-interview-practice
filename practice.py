@@ -55,6 +55,20 @@ def main():
         print denom,
     print '\n-------'
     optimalChange(denoms,amount)
+    print
+    
+    # Array rotation problem
+    print 'K Rotations of an Array Problem'
+    arr = [1,2,3,4,5,6]
+    k = 13
+    print 'Input:',arr
+    print 'K:',k
+    print 'Output:',array_rotation(arr,k)
+
+def array_rotation(arr,k):
+    l = len(arr)
+    r = k % l
+    return [arr[(x+r)%l] for x in range(l)]
     
 def optimalChange(denoms,amount):
     dp = [[0 for cols in denoms] for rows in range(amount+1)]
