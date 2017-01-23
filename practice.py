@@ -4,6 +4,8 @@ from linked_list import ListNode
 import binary_tree as BST
 from binary_tree import BSTNode
 
+import math
+
 def main():
     # Longest Palindrome Substring
     str = "asdfasddsaalkj"
@@ -64,7 +66,61 @@ def main():
     print 'Input:',arr
     print 'K:',k
     print 'Output:',array_rotation(arr,k)
+    print
+    
+    # Minimum Subarray Sum Problem
+    arr = [2,3,1,2,4,3]
+    print arr
+    print 'Input:',7,' Output:',minimum_subarray_sum(arr,7)
+    print 'Input:',6,' Output:',minimum_subarray_sum(arr,6)
+    print 'Input:',15,' Output:',minimum_subarray_sum(arr,15)
+    
+    # Unique Paths
+    unique_paths(10,10)
 
+def unique_paths(m,n):
+    dp = [[0 for x in range(m)] for y in range(n)]
+    
+    for j in range(m):
+        dp[0][j] = 1
+    
+    for i in range(n):
+        dp[i][0] = 1
+        
+    for i in range(1,n):
+        for j in range(1,m):
+            dp[i][j] = dp[i-1][j] + dp[j-1][i]
+    print_matrix(dp)
+    return dp[m-1][n-1]
+    
+def minimum_subarray_sum_naive(arr,k):
+    for win_size in range(1,len(arr)+1):
+        for iter in range(len(arr)):
+            subarr = arr[iter:iter+win_size]
+            sum = 0
+            for x in subarr:
+                sum += x
+            if sum >= k:
+                return (iter,iter+win_size-1)
+    return (-1,-1)
+    
+def minimum_subarray_sum(arr,k):
+    i = 0
+    j = 0
+    cur_min = len(arr)**2
+    sum = 0
+    for j in range(len(arr)):
+        sum += arr[j]
+        while(sum >= k and i <= j):
+            cur_min = min(cur_min,j-i+1)
+            sum -= arr[i]
+            i += 1
+            
+    if cur_min == len(arr)**2:
+        return 0
+    else:
+        return cur_min
+      
 def array_rotation(arr,k):
     l = len(arr)
     r = k % l
