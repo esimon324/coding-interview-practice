@@ -77,7 +77,32 @@ def main():
     
     # Unique Paths
     unique_paths(10,10)
+    print 
+    
+    # Word Break Problem
+    str = 'iambatman'
+    dict = ['i','a','am','bat','man','batman']
+    result = []
+    print word_break(dict,str,result)
+    print result
 
+def word_break(dict,str,result):
+    print str
+    if len(str) == 0:
+        return True
+    else:
+        endpts = []
+        for j in range(1,len(str)+1):
+            if str[:j] in dict:
+                endpts.append(j)
+                
+        for j in endpts:
+            if word_break(dict,str[j:],result):
+                result.insert(0,str[:j])
+                return True
+            
+        return False
+        
 def unique_paths(m,n):
     dp = [[0 for x in range(m)] for y in range(n)]
     
