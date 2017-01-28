@@ -5,6 +5,7 @@ import binary_tree as BST
 from binary_tree import BSTNode
 
 import math
+import numpy as np
 
 def main():
     # Longest Palindrome Substring
@@ -85,6 +86,56 @@ def main():
     result = []
     print word_break(dict,str,result)
     print result
+    print
+    
+    # Matrix encryption
+    str = 'the quick brown fox jumped over the lazy dog'
+    e = matrix_encrypt(5,str)
+    d = matrix_decrypt(5,e)
+    print 'Input:',str
+    print 'Encrypted:',e
+    print 'Decrypted:',d
+    print
+    
+    with open('input.txt','r') as file:
+        data = file.read()
+    e = matrix_encrypt(17,data)
+    d = matrix_decrypt(17,e)
+    print e
+    print d
+
+def matrix_decrypt(k,str):
+    rows = k
+    cols = (int)(math.ceil((float)(len(str)) / (float)(k)))
+    mat = np.matrix([[' ' for n in range(cols)] for m in range(rows)])
+    for i in range(rows):
+        for j in range(cols):
+            index = (i*cols)+j
+            if index < len(str):
+                mat[i,j] = str[index]
+    d = np.transpose(mat)
+    result = ''
+    for i in range(cols):
+        for j in range(rows):
+            result = result+d[i,j]
+    return result
+    
+def matrix_encrypt(k,str):
+    cols = k
+    rows = (int)(math.ceil((float)(len(str)) / (float)(k)))
+    mat = np.matrix([[' ' for n in range(cols)] for m in range(rows)])
+    for i in range(rows):
+        for j in range(cols):
+            index = (i*k)+j
+            if index < len(str):
+                mat[i,j] = str[index]   
+    e = np.transpose(mat)
+    result = ''
+    r,c = e.shape
+    for i in range(r):
+        for j in range(c):
+            result = result+e[i,j]
+    return result
 
 def word_break(dict,str,result):
     print str
