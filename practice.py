@@ -97,12 +97,27 @@ def main():
     print 'Decrypted:',d
     print
     
-    with open('input.txt','r') as file:
-        data = file.read()
-    e = matrix_encrypt(17,data)
-    d = matrix_decrypt(17,e)
-    print e
-    print d
+    # Highest Product of K
+    a1 = [-10,4,8,-2,1,]
+    print highest_product_of_k(a1,3)
+    print highest_product_of_k(a1,4)
+    
+def highest_product_of_k(arr,k):
+    mx = max(arr)
+    mn = min(arr)
+    
+    max_abs = 0
+    if (mn*-1) > mx:
+        max_abs = mn
+    else:
+        max_abs = mx
+    
+    ret = 1
+    if k%2 == 1:
+        ret = max_abs**(k-1)
+        return ret*mx
+    else:
+        return max_abs**k
 
 def matrix_decrypt(k,str):
     rows = k
