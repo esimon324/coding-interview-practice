@@ -101,6 +101,18 @@ def main():
     a1 = [-10,4,8,-2,1,]
     print highest_product_of_k(a1,3)
     print highest_product_of_k(a1,4)
+    print
+    
+    # Array Swap in Place without a Temporary Variable
+    arr = [1,2,3,4,5,6]
+    print 'Array:',arr
+    swap_in_place_no_temp(arr,0,len(arr)-1)
+    print 'Swap first and last index:',arr
+    
+def swap_in_place_no_temp(arr,n,m):
+    arr[n] += arr[m]
+    arr[m] = arr[n] - arr[m]
+    arr[n] -= arr[m]
     
 def highest_product_of_k(arr,k):
     mx = max(arr)
