@@ -108,7 +108,54 @@ def main():
     print 'Array:',arr
     swap_in_place_no_temp(arr,0,len(arr)-1)
     print 'Swap first and last index:',arr
+    print
     
+    # Print all valid parens problem
+    for n in range(6):
+        parens = n_pairs_paren(n)
+        print 'Valid parens pairs of size',n
+        for i in range(len(parens)):
+            print (i+1),parens[i]
+        print
+        
+    # Valid parens problem
+    str = '(5+6)/((7+8)*9)'
+    print 'Equation:',str
+    print 'Are parens balanced?',has_balanced_parens(str)
+    
+def has_balanced_parens(str):
+    stack = []
+    for ch in str:
+        if ch == '(':
+            stack.append(ch)
+        elif ch == ')':
+            if len(stack) > 0:
+                stack.pop()
+            else:
+                return False
+    if len(stack) > 0:
+        return False
+    else:
+        return True
+
+        
+def n_pairs_paren(n):
+    if n < 1:
+        return ''
+    else:
+        parens = []
+        n_pairs_paren_helper(n,n,'',parens)
+        return parens
+
+def n_pairs_paren_helper(open,closed,str,parens):
+    if open == 0 and closed == 0:
+        parens.append(str)
+    elif open <= closed:
+        if open > 0:
+            n_pairs_paren_helper(open-1,closed,str+'(',parens)
+        if closed > 0:
+            n_pairs_paren_helper(open,closed-1,str+')',parens)
+
 def swap_in_place_no_temp(arr,n,m):
     arr[n] += arr[m]
     arr[m] = arr[n] - arr[m]
