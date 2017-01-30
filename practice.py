@@ -123,6 +123,31 @@ def main():
     print 'Equation:',str
     print 'Are parens balanced?',has_balanced_parens(str)
     
+    # Decimal to binary string
+    i = 66
+    bin = dec2binstr(i)
+    print 'Decimal:',i
+    print 'Binary String:',bin
+    
+    
+def dec2binstr(n):
+    if n <= 1:
+        return str(n)
+    else:
+        result = ''
+        i = 1
+        while n > 2**i:
+            i += 1
+        while i >= 0:
+            bit_val = 2**i
+            if (n - bit_val) >= 0:
+                n = n - bit_val
+                result = result + '1'
+            else:
+                result = result + '0'
+            i = i - 1
+        return result
+    
 def has_balanced_parens(str):
     stack = []
     for ch in str:
